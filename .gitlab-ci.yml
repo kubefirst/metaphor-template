@@ -1,5 +1,5 @@
 variables:
-  ARGO_SERVER: 'argo.<AWS_HOSTED_ZONE_NAME>:443'
+  ARGO_SERVER: "argo.<AWS_HOSTED_ZONE_NAME>:443"
   ARGO_HTTP1: 'true'  
   ARGO_SECURE: 'true'
   ARGO_NAMESPACE: argo
