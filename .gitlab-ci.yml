@@ -1,5 +1,5 @@
 variables:
-  ARGO_SERVER: 'argo.<AWS_HOSTED_ZONE_NAME>:443'
+  ARGO_SERVER: "argo.<AWS_HOSTED_ZONE_NAME>:443"
   ARGO_HTTP1: 'true'  
   ARGO_SECURE: 'true'
   ARGO_NAMESPACE: argo
@@ -26,6 +26,7 @@ lint:
     - |
       argo submit .argo/npm-run.yaml \
         --generate-name="${CI_PROJECT_NAME}-lint-${CI_COMMIT_SHORT_SHA}" \
+        --serviceaccount=argo \
         -p appName="${CI_PROJECT_NAME}" \
         -p branch="${CI_COMMIT_REF_NAME}" \
         -p gitRepoUrl="${CI_PROJECT_URL}" \
@@ -43,6 +44,7 @@ build:
     - |
       argo submit .argo/npm-run.yaml \
         --generate-name="${CI_PROJECT_NAME}-build-${CI_COMMIT_SHORT_SHA}" \
+        --serviceaccount=argo \
         -p appName="${CI_PROJECT_NAME}" \
         -p branch="${CI_COMMIT_REF_NAME}" \
         -p gitRepoUrl="${CI_PROJECT_URL}" \
@@ -59,6 +61,7 @@ publish:
     - |
       argo submit .argo/publish.yaml \
         --generate-name="${CI_PROJECT_NAME}-publish-${CI_COMMIT_SHORT_SHA}" \
+        --serviceaccount=argo \
         -p appName="${CI_PROJECT_NAME}" \
         -p ciCommitSha="${CI_COMMIT_SHA}" \
         -p branch="${CI_COMMIT_REF_NAME}" \
@@ -77,6 +80,7 @@ development:
     - |
       argo submit .argo/deploy.yaml \
         --generate-name="${CI_PROJECT_NAME}-development-${CI_COMMIT_SHORT_SHA}" \
+        --serviceaccount=argo \
         -p appName="${CI_PROJECT_NAME}" \
         -p ciCommitSha="${CI_COMMIT_SHA}" \
         -p branch="${CI_COMMIT_REF_NAME}" \
@@ -95,6 +99,7 @@ staging:
     - |
       argo submit .argo/deploy.yaml \
         --generate-name="${CI_PROJECT_NAME}-staging-${CI_COMMIT_SHORT_SHA}" \
+        --serviceaccount=argo \
         -p appName="${CI_PROJECT_NAME}" \
         -p ciCommitSha="${CI_COMMIT_SHA}" \
         -p branch="${CI_COMMIT_REF_NAME}" \
@@ -113,6 +118,7 @@ release:
     - |
       argo submit .argo/release.yaml \
         --generate-name="${CI_PROJECT_NAME}-release-${CI_COMMIT_SHORT_SHA}" \
+        --serviceaccount=argo \
         -p appName="${CI_PROJECT_NAME}" \
         -p ciCommitSha="${CI_COMMIT_SHA}" \
         -p branch="${CI_COMMIT_REF_NAME}" \
