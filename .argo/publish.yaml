@@ -48,7 +48,7 @@ spec:
           - name: appDir
             value: "{{workflow.parameters.appDir}}"
           - name: appName
-            value: "{{workflow.parameters.appName}}"
+            value: "{{workflow.parameters.appName}}-<CLUSTER_NAME>"
           - name: ciCommitSha
             value: "{{workflow.parameters.ciCommitSha}}"
 
