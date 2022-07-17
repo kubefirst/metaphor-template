@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_DEFAULT_REGION>.amazonaws.com/metaphor
+  repository: <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_DEFAULT_REGION>.amazonaws.com/metaphor-<CLUSTER_NAME>
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
