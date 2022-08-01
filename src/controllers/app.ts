@@ -17,14 +17,19 @@ export const getApp = (req: Request, res: Response) => {
 };
 
 export const performance = async (req: Request, res: Response) => {
-  const sleepTime = Math.floor(Math.random() * 2 * 1000);
-  await delay(sleepTime);
-  res.send({ hello: "world", sleepTime });
+    const sleepTime = Math.floor(Math.random() * 10000);
+    console.log("sleeping for", sleepTime/1000, "seconds");
+    await new Promise(resolve => setTimeout(resolve, sleepTime));
+    await res.status(200).send();
 };
 
 export const healthz = (req: Request, res: Response) => {
-    res.status(200).json({"plk": "osok"})
+    console.log("Im healthy!")
+    res.status(200);
 }
 export const kill = (req: Request, res: Response) => {
-    res.status(200).json({"plk": "kill"})
+    console.log("Kill endpoint was called, and the application is being force terminated...");
+    setTimeout(() => {
+        process.exit(1);
+    },         3000);
 }
