@@ -15,23 +15,23 @@ stages:
   - staging
   - release
 
-lint:
-  image: "${BUILDER_IMAGE}"
-  stage: branch
-  only:
-    - branches
-  except:
-    - main
-  script:
-    - |
-      argo submit .argo/npm-run.yaml \
-        --generate-name="${CI_PROJECT_NAME}-lint-${CI_COMMIT_SHORT_SHA}" \
-        --serviceaccount=argo \
-        -p appName="${CI_PROJECT_NAME}" \
-        -p branch="${CI_COMMIT_REF_NAME}" \
-        -p gitRepoUrl="${CI_PROJECT_URL}" \
-        -p npmScriptName="lint" \
-        --wait --log
+#lint:
+#  image: "${BUILDER_IMAGE}"
+#  stage: branch
+#  only:
+#    - branches
+#  except:
+#    - main
+#  script:
+#    - |
+#      argo submit .argo/npm-run.yaml \
+#        --generate-name="${CI_PROJECT_NAME}-lint-${CI_COMMIT_SHORT_SHA}" \
+#        --serviceaccount=argo \
+#        -p appName="${CI_PROJECT_NAME}" \
+#        -p branch="${CI_COMMIT_REF_NAME}" \
+#        -p gitRepoUrl="${CI_PROJECT_URL}" \
+#        -p npmScriptName="lint" \
+#        --wait --log
 
 build:
   image: "${BUILDER_IMAGE}"

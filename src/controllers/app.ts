@@ -1,11 +1,5 @@
 import { Request, Response } from "express";
 
-// todo: move it?
-function delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-
 export const getApp = (req: Request, res: Response) => {
     const jsonResponse = {
         "app_name": "Metaphor",
@@ -25,7 +19,7 @@ export const performance = async (req: Request, res: Response) => {
 
 export const healthz = (req: Request, res: Response) => {
     console.log("Im healthy!")
-    res.status(200);
+    res.status(200).send();
 }
 export const kill = (req: Request, res: Response) => {
     console.log("Kill endpoint was called, and the application is being force terminated...");
