@@ -1,12 +1,12 @@
-import express, {Application} from "express";
 import router from "./routes";
+import e from "express";
 
 // Create Express server
-const app: Application = express();
+const app: e.Application = e();
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);
-app.use(express.json())
+app.use(e.json())
 
 app.use(router)
 
