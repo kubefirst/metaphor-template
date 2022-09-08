@@ -1,0 +1,68 @@
+name: GitHub Actions
+env:
+#  ARGO_SERVER: "argo.6zray.kubefast.com:443"
+ # ARGO_HTTP1: 'true'  
+ # ARGO_SECURE: 'true'
+  ARGO_NAMESPACE: argo
+  ARGO_VERSION: v3.1.11
+#  BUILDER_IMAGE: "kubefirst/chubbo:0.2"
+# this needs to be a template
+  GITREPO_URL: ssh://git@<GITHUB_HOST>/<GITHUB_OWNER>/metaphor.git
+  CI_PROJECT_NAME: metaphor
+  
+  
+
+on: [push]
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Build image
+        run: |
+            cd $HOME
+            echo "Install argo"
+            # Download the binary
+            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+            # Unzip
+            gunzip argo-linux-amd64.gz
+            # Make binary executable
+            chmod +x argo-linux-amd64
+            # Move binary to path
+            sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+            # Test installation
+            argo version --short            
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo ${GITHUB_REPOSITORY#*/}
+      - run: echo ${GITHUB_SERVER_URL:8}
+      - run: echo ${GITHUB_RUN_ID}
+      - run: echo ${GITHUB_SHA:7}
+      - run: echo ${GITHUB_REF_NAME}
+      - run: echo ${GITHUB_REPOSITORY}      
+      - run: echo ${GITREPO_URL}      
+      - name: Branch - Build
+        run: |
+          argo version --short   
+          argo submit .argo/npm-run.yaml \
+          --generate-name="${CI_PROJECT_NAME}-build-${GITHUB_SHA:7}" \
+          --serviceaccount=argo \
+          -p appName="${GITHUB_REPOSITORY#*/}" \
+          -p branch="${GITHUB_REF_NAME}" \
+          -p gitRepoUrl="${GITREPO_URL}" \
+          -p npmScriptName="build" \
+          --wait --log -v  
+      - name: publish
+        run: |
+          echo "commit sha $GITHUB_SHA"
+          argo version --short   
+          argo submit .argo/publish.yaml \
+            --generate-name="${CI_PROJECT_NAME}-publish-${GITHUB_SHA:7}" \
+            --serviceaccount=argo \
+            -p appName="${CI_PROJECT_NAME}" \
+            -p ciCommitSha="${GITHUB_SHA}" \
+            -p branch="${GITHUB_REF_NAME}" \
+            -p gitRepoUrl="${GITREPO_URL}" \
+            -p shortSha="${GITHUB_SHA:7}" \
+            --wait --log
+      - run: echo "🍏 This job's status is ${{ job.status }}."                    
