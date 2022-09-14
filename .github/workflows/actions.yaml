@@ -65,4 +65,20 @@ jobs:
             -p gitRepoUrl="${GITREPO_URL}" \
             -p shortSha="${GITHUB_SHA:7}" \
             --wait --log
+            
+      - name: development
+        run: |
+          echo "commit sha $GITHUB_SHA"
+          argo version --short   
+          argo submit .argo/deploy.yaml \
+            --generate-name="${CI_PROJECT_NAME}-development-${GITHUB_SHA:7}" \
+            --serviceaccount=argo \
+            -p appName="${CI_PROJECT_NAME}" \
+            -p ciCommitSha="${GITHUB_SHA}" \
+            -p branch="${GITHUB_REF_NAME}" \
+            -p environment="development" \
+            -p gitRepoUrl="${GITREPO_URL}" \
+            -p shortSha="${GITHUB_SHA:7}" \
+            --wait --log  
+            
       - run: echo "🍏 This job's status is ${{ job.status }}."                    
