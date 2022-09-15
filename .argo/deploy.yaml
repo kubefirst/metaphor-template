@@ -29,7 +29,7 @@ spec:
     - - name: checkout
         templateRef:
           name: cwft-git
-          template: git-checkout-with-gitops
+          template: <CHECKOUT_CWFT_TEMPLATE>
           clusterScope: true 
         arguments:
           parameters:
@@ -75,7 +75,7 @@ spec:
     - - name: commit
         templateRef:
           name: cwft-git
-          template: git-commit
+          template: <COMMIT_CWFT_TEMPLATE>
           clusterScope: true 
         arguments:
           artifacts:
