@@ -85,7 +85,21 @@ spec:
             value: "{{steps.get-initial-chart-version.outputs.result}}-rc.{{workflow.parameters.shortSha}}"
           - name: ciCommitSha
             value: "{{workflow.parameters.ciCommitSha}}"
-
+    - - name: publish-check-cm
+        templateRef:
+          name: cwft-helm
+          template: helm-check-chart-museum
+          clusterScope: true
+        arguments:
+          artifacts:
+          - name: repo-source
+            from: "{{steps.set-chart-versions.outputs.artifacts.repo-source}}"
+          parameters:
+          - name: appDir
+            value: "{{workflow.parameters.appDir}}"
+          - name: chartDir
+            value: "{{workflow.parameters.chartDir}}"  
+            
     - - name: publish-helm-chart
         templateRef:
           name: cwft-helm
