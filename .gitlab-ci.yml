@@ -54,7 +54,6 @@ build:
 publish:
   image: "${BUILDER_IMAGE}"
   stage: publish
-  retry: 2
   only:
     - main
   script:
