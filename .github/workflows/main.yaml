@@ -155,6 +155,7 @@ jobs:
             -p branch="${GITHUB_REF_NAME}" \
             -p environment="production" \
             -p gitRepoUrl="${GITREPO_URL}" \
+            -p gitRepoPath="${GITREPO_URL}" \
             -p shortSha="${GITHUB_SHA:7}" \
             --wait --log              
       - run: echo "🍏 This job's status is ${{ job.status }}."  

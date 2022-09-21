@@ -125,5 +125,6 @@ release:
         -p branch="${CI_COMMIT_REF_NAME}" \
         -p environment="production" \
         -p gitRepoUrl="${CI_PROJECT_URL}" \
+        -p gitRepoPath="${CI_PROJECT_URL:8}" \
         -p shortSha="${CI_COMMIT_SHORT_SHA}" \
         --wait --log
