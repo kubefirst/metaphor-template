@@ -1,116 +1,66 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
+metadata:
+  namespace: argo
 spec:
   entrypoint: main
-  arguments:
-    parameters:
-    - name: appDir
-      value: /src/{{workflow.parameters.appName}}
-    - name: appName
-      value: "{{workflow.parameters.appName}}"
-    - name: chartDir
-      value: charts/{{workflow.parameters.appName}}
-    - name: ciCommitSha
-      value: "{{workflow.parameters.ciCommitSha}}"
-    - name: branch
-      value: "{{workflow.parameters.branch}}"
-    - name: gitRepoUrl
-      value: "{{workflow.parameters.gitRepoUrl}}"
-    - name: shortSha
-      value: "{{workflow.parameters.shortSha}}"
+  volumeClaimTemplates:
+    - metadata:
+        name: work
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 64Mi
+  serviceAccountName: argo-server
   templates:
   - name: main
     steps:
+    - - name: publish-container
+        templateRef:
+          name: cwft-buildkit
+          template: build-push
+          clusterScope: true
     - - name: checkout
         templateRef:
           name: cwft-git
-          template: <CHECKOUT_CWFT_TEMPLATE>
+          template: checkout-with-gitops
           clusterScope: true
-        arguments:
-          parameters:
-          - name: appDir
-            value: "{{workflow.parameters.appDir}}"
-          - name: branch
-            value: "{{workflow.parameters.branch}}"
-          - name: gitRepoUrl
-            value: "{{workflow.parameters.gitRepoUrl}}"
-
-    - - name: publish-container
-        templateRef:
-          name: cwft-docker
-          template: docker-build
-          clusterScope: true
-        arguments:
-          artifacts:
-          - name: repo-source
-            from: "{{steps.checkout.outputs.artifacts.repo-source}}"
-          parameters:
-          - name: appDir
-            value: "{{workflow.parameters.appDir}}"
-          - name: appName
-            value: "{{workflow.parameters.appName}}-<CLUSTER_NAME>"
-          - name: ciCommitSha
-            value: "{{workflow.parameters.ciCommitSha}}"
-
     - - name: get-initial-chart-version
         templateRef:
           name: cwft-helm
-          template: helm-get-chart-version
+          template: get-chart-version
           clusterScope: true
         arguments:
           artifacts:
           - name: repo-source
             from: "{{steps.checkout.outputs.artifacts.repo-source}}"
           parameters:
-          - name: appDir
-            value: "{{workflow.parameters.appDir}}"
           - name: chartDir
-            value: "{{workflow.parameters.chartDir}}"
-
+            value: "charts/{{workflow.parameters.appName}}"
     - - name: set-chart-versions
         templateRef:
           name: cwft-helm
-          template: helm-set-chart-versions
-          clusterScope: true
-        arguments:
-          artifacts:
-            - name: repo-source
-              from: "{{steps.checkout.outputs.artifacts.repo-source}}"
-          parameters:
-          - name: appDir
-            value: "{{workflow.parameters.appDir}}"
-          - name: chartDir
-            value: "{{workflow.parameters.chartDir}}"
-          - name: chartVersion
-            value: "{{steps.get-initial-chart-version.outputs.result}}-rc.{{workflow.parameters.shortSha}}"
-          - name: ciCommitSha
-            value: "{{workflow.parameters.ciCommitSha}}"
-    - - name: publish-check-cm
-        templateRef:
-          name: cwft-helm
-          template: helm-check-chart-museum
+          template: set-chart-versions
           clusterScope: true
         arguments:
           artifacts:
           - name: repo-source
-            from: "{{steps.set-chart-versions.outputs.artifacts.repo-source}}"
+            from: "{{steps.checkout.outputs.artifacts.repo-source}}"
           parameters:
-          - name: appDir
-            value: "{{workflow.parameters.appDir}}"
           - name: chartDir
-            value: "{{workflow.parameters.chartDir}}"  
-            
+            value: "charts/{{workflow.parameters.appName}}"
+          - name: chartVersion
+            value: "{{steps.get-initial-chart-version.outputs.result}}-rc.{{workflow.parameters.shortSha}}"
     - - name: publish-helm-chart
         templateRef:
           name: cwft-helm
-          template: helm-publish-chart
+          template: publish-chart
           clusterScope: true
         arguments:
           artifacts:
           - name: repo-source
             from: "{{steps.set-chart-versions.outputs.artifacts.repo-source}}"
           parameters:
-          - name: appDir
-            value: "{{workflow.parameters.appDir}}"
           - name: chartDir
-            value: "{{workflow.parameters.chartDir}}"
+            value: "charts/{{workflow.parameters.appName}}"
