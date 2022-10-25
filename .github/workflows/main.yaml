@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "commit sha $GITHUB_SHA"
           argo version --short   
-          argo submit .argo/publish.yaml \
+          argo submit .argo/publish-<CLOUD>.yaml \
             --generate-name="${CI_PROJECT_NAME}-publish-${GITHUB_SHA:7}" \
             --serviceaccount=argo \
             -p appName="${CI_PROJECT_NAME}" \

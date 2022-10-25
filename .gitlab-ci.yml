@@ -59,7 +59,7 @@ publish:
   script:
     - echo "commit sha $CI_COMMIT_SHA"
     - |
-      argo submit .argo/publish.yaml \
+      argo submit .argo/publish-<CLOUD>.yaml \
         --generate-name="${CI_PROJECT_NAME}-publish-${CI_COMMIT_SHORT_SHA}" \
         --serviceaccount=argo \
         -p appName="${CI_PROJECT_NAME}" \
