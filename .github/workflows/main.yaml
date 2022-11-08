@@ -51,6 +51,7 @@ jobs:
             -p branch="${GITHUB_REF_NAME}" \
             -p gitRepoUrl="${GITREPO_URL}" \
             -p shortSha="${GITHUB_SHA:7}" \
+            -p dockerFilePath="build/Dockerfile" \
             --wait --log
       - run: echo "🍏 This job's status is ${{ job.status }}."              
   development:
