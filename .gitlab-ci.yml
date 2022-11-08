@@ -67,6 +67,7 @@ publish:
         -p branch="${CI_COMMIT_REF_NAME}" \
         -p gitRepoUrl="${CI_PROJECT_URL}" \
         -p shortSha="${CI_COMMIT_SHORT_SHA}" \
+        -p dockerFilePath="build/Dockerfile" \
         --wait --log
             
 

@@ -18,6 +18,8 @@ spec:
       value: "{{workflow.parameters.gitRepoUrl}}"
     - name: shortSha
       value: "{{workflow.parameters.shortSha}}"
+    - name: dockerFilePath
+      value: "{{workflow.parameters.dockerFilePath}}"
   templates:
   - name: main
     steps:
@@ -51,6 +53,8 @@ spec:
             value: "{{workflow.parameters.appName}}-<CLUSTER_NAME>"
           - name: ciCommitSha
             value: "{{workflow.parameters.ciCommitSha}}"
+          - name: dockerFilePath
+            value: "{{workflow.parameters.dockerFilePath}}"
 
     - - name: get-initial-chart-version
         templateRef:
