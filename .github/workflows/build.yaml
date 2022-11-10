@@ -20,13 +20,13 @@ jobs:
             cd $HOME
             echo "Install argo"
             # Download the binary
-            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$RUNNER_ARCH.gz
             # Unzip
-            gunzip argo-linux-amd64.gz
+            gunzip argo-linux-$RUNNER_ARCH.gz
             # Make binary executable
-            chmod +x argo-linux-amd64
+            chmod +x argo-linux-$RUNNER_ARCH
             # Move binary to path
-            sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+            sudo mv ./argo-linux-$RUNNER_ARCH /usr/local/bin/argo
             # Test installation
             argo version --short            
       - name: Check out repository code
