@@ -32,13 +32,13 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV          
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo on $ARCH"    
+            echo "Install argo on $ARCH"
             # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
@@ -87,13 +87,13 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV          
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo on $ARCH"    
+            echo "Install argo on $ARCH"
             # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
@@ -138,13 +138,14 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV          
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
             echo "Install argo on $ARCH"
+            # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
             gunzip argo-linux-$ARCH.gz
@@ -188,13 +189,14 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV          
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
             echo "Install argo on $ARCH"
+            # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
             gunzip argo-linux-$ARCH.gz
