@@ -19,18 +19,34 @@ jobs:
   publish:
     runs-on: self-hosted
     steps:
+      - name: Define Arch arm64
+        if: "${{ runner.arch == 'ARM64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to ARM64"
+          ARCH=arm64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+      - name: Define Arch amd64
+        if: "${{ runner.arch == 'X64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to amd64"
+          ARCH=amd64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
+        env: 
+          ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo"
+            echo "Install argo on $ARCH"
             # Download the binary
-            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
-            gunzip argo-linux-amd64.gz
+            gunzip argo-linux-$ARCH.gz
             # Make binary executable
-            chmod +x argo-linux-amd64
+            chmod +x argo-linux-$ARCH
             # Move binary to path
-            sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+            sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
             argo version --short            
       - name: Check out repository code
@@ -58,18 +74,34 @@ jobs:
     needs: publish
     runs-on: self-hosted
     steps:
+      - name: Define Arch arm64
+        if: "${{ runner.arch == 'ARM64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to ARM64"
+          ARCH=arm64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+      - name: Define Arch amd64
+        if: "${{ runner.arch == 'X64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to amd64"
+          ARCH=amd64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
+        env: 
+          ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo"
+            echo "Install argo on $ARCH"
             # Download the binary
-            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
-            gunzip argo-linux-amd64.gz
+            gunzip argo-linux-$ARCH.gz
             # Make binary executable
-            chmod +x argo-linux-amd64
+            chmod +x argo-linux-$ARCH
             # Move binary to path
-            sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+            sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
             argo version --short            
       - name: Check out repository code
@@ -93,18 +125,34 @@ jobs:
     needs: development
     runs-on: self-hosted
     steps:
+      - name: Define Arch arm64
+        if: "${{ runner.arch == 'ARM64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to ARM64"
+          ARCH=arm64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+      - name: Define Arch amd64
+        if: "${{ runner.arch == 'X64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to amd64"
+          ARCH=amd64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
+        env: 
+          ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo"
+            echo "Install argo on $ARCH"
             # Download the binary
-            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
-            gunzip argo-linux-amd64.gz
+            gunzip argo-linux-$ARCH.gz
             # Make binary executable
-            chmod +x argo-linux-amd64
+            chmod +x argo-linux-$ARCH
             # Move binary to path
-            sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+            sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
             argo version --short            
       - name: Check out repository code
@@ -128,18 +176,34 @@ jobs:
     needs: staging  
     runs-on: self-hosted
     steps:
+      - name: Define Arch arm64
+        if: "${{ runner.arch == 'ARM64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to ARM64"
+          ARCH=arm64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV
+      - name: Define Arch amd64
+        if: "${{ runner.arch == 'X64' }}"
+        shell: bash
+        run: |
+          echo "Setting arch to amd64"
+          ARCH=amd64
+          echo "ARCH=$ARCH" >> $GITHUB_ENV              
       - name: Setup Runner for Argo
+        env: 
+          ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo"
+            echo "Install argo on $ARCH"
             # Download the binary
-            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-amd64.gz
+            curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
-            gunzip argo-linux-amd64.gz
+            gunzip argo-linux-$ARCH.gz
             # Make binary executable
-            chmod +x argo-linux-amd64
+            chmod +x argo-linux-$ARCH
             # Move binary to path
-            sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+            sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
             argo version --short            
       - name: Check out repository code
