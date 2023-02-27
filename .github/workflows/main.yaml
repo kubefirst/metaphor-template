@@ -3,8 +3,8 @@ env:
   ARGO_NAMESPACE: argo
   ARGO_VERSION: v3.1.11
 # this needs to be a template
-  GITREPO_URL: ssh://git@<GITHUB_HOST>/<GITHUB_OWNER>/metaphor.git
-  CI_PROJECT_NAME: metaphor
+  GITREPO_URL: ssh://git@<GITHUB_HOST>/<GITHUB_OWNER>/metaphor-frontend.git
+  CI_PROJECT_NAME: metaphor-frontend
 
 # To confirm this logic
 # There is circular effect due to the bump of version
@@ -32,13 +32,13 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV              
+          echo "ARCH=$ARCH" >> $GITHUB_ENV    
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo on $ARCH"
+            echo "Install argo"
             # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
@@ -48,7 +48,7 @@ jobs:
             # Move binary to path
             sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
-            argo version --short            
+            argo version --short    
       - name: Check out repository code
         uses: actions/checkout@v3
       - run: echo ${GITHUB_REPOSITORY}        
@@ -87,13 +87,13 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV              
+          echo "ARCH=$ARCH" >> $GITHUB_ENV    
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo on $ARCH"
+            echo "Install argo"
             # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
@@ -103,7 +103,7 @@ jobs:
             # Move binary to path
             sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
-            argo version --short            
+            argo version --short        
       - name: Check out repository code
         uses: actions/checkout@v3            
       - name: development
@@ -138,13 +138,13 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV              
+          echo "ARCH=$ARCH" >> $GITHUB_ENV    
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo on $ARCH"
+            echo "Install argo"
             # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
@@ -154,7 +154,7 @@ jobs:
             # Move binary to path
             sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
-            argo version --short            
+            argo version --short         
       - name: Check out repository code
         uses: actions/checkout@v3              
       - name: staging
@@ -189,13 +189,13 @@ jobs:
         run: |
           echo "Setting arch to amd64"
           ARCH=amd64
-          echo "ARCH=$ARCH" >> $GITHUB_ENV              
+          echo "ARCH=$ARCH" >> $GITHUB_ENV    
       - name: Setup Runner for Argo
         env: 
           ARCH: ${{ env.ARCH }}
         run: |
             cd $HOME
-            echo "Install argo on $ARCH"
+            echo "Install argo"
             # Download the binary
             curl -sLO https://github.com/argoproj/argo-workflows/releases/download/${ARGO_VERSION}/argo-linux-$ARCH.gz
             # Unzip
@@ -205,7 +205,7 @@ jobs:
             # Move binary to path
             sudo mv ./argo-linux-$ARCH /usr/local/bin/argo
             # Test installation
-            argo version --short            
+            argo version --short          
       - name: Check out repository code
         uses: actions/checkout@v3                    
       - name: release
