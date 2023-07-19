@@ -1,3 +1,5 @@
+> ⚠️ The kubefirst exploration applications metaphor has been merged into one version, and moved inside the [gitops-teplate repository](https://github.com/kubefirst/gitops-template/tree/main/metaphor).
+
 ![](logo.png)
 
 `metaphor` is an example application which serves as a demonstration space for how your applications hook into your infrastructure and tooling.
