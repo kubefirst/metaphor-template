@@ -1,4 +1,4 @@
-> ⚠️ The kubefirst exploration applications metaphor has been merged into one version, and moved inside the [gitops-teplate repository](https://github.com/kubefirst/gitops-template/tree/main/metaphor).
+> ⚠️ The kubefirst exploration applications metaphor has been merged into one version, and moved inside the [gitops-template repository](https://github.com/kubefirst/gitops-template/tree/main/metaphor).
 
 ![](logo.png)
 
