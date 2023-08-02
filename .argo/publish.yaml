@@ -89,6 +89,7 @@ spec:
             value: "{{steps.get-initial-chart-version.outputs.result}}-rc.{{workflow.parameters.shortSha}}"
           - name: ciCommitSha
             value: "{{workflow.parameters.ciCommitSha}}"
+            
     - - name: publish-check-cm
         templateRef:
           name: cwft-helm
@@ -103,7 +104,7 @@ spec:
             value: "{{workflow.parameters.appDir}}"
           - name: chartDir
             value: "{{workflow.parameters.chartDir}}"  
-            
+
     - - name: publish-helm-chart
         templateRef:
           name: cwft-helm

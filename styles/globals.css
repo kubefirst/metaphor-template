@@ -1,0 +1,205 @@
+/***
+    The new CSS reset - version 1.7.3 (last updated 7.8.2022)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+***/
+
+/*
+    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    - The "symbol *" part is to solve Firefox SVG sprite bug
+ */
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+  all: unset;
+  display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Reapply the pointer cursor for anchor tags */
+a,
+button {
+  cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol,
+ul,
+menu {
+  list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+  max-width: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+  border-collapse: collapse;
+}
+
+/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+input,
+textarea {
+  -webkit-user-select: auto;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+  white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+  -webkit-appearance: revert;
+  appearance: revert;
+}
+
+/* reset default text opacity of input placeholder */
+::placeholder {
+  color: unset;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+  display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly.
+   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
+:where([contenteditable]:not([contenteditable='false'])) {
+  -moz-user-modify: read-write;
+  -webkit-user-modify: read-write;
+  overflow-wrap: break-word;
+  -webkit-line-break: after-white-space;
+  -webkit-user-select: auto;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable='true']) {
+  -webkit-user-drag: element;
+}
+
+/* custom */
+html {
+  background-color: #f5f5f7;
+  font-family: Verdana, Arial, serif;
+}
+
+/** Container **/
+#container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 100px 1fr;
+}
+
+/** Header **/
+
+#header {
+  display: grid;
+  justify-content: center;
+  grid-column: 1;
+  grid-row: 1;
+  background-color: #ffffff;
+  height: 100px;
+  text-align: center;
+}
+
+#kubefirst-logo {
+  margin-top: 1rem;
+  width: 18rem;
+  object-fit: contain;
+}
+
+/** Main **/
+
+.local-main {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 900px 1fr;
+  grid-template-rows: 1fr;
+}
+
+/** Items **/
+.local-items {
+  display: grid;
+  grid-row: 1;
+  grid-column: 1;
+  grid-template-rows: 1fr;
+  grid-column-gap: 80px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.items {
+  display: grid;
+  grid-row: 1;
+  grid-column: 2;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 80px;
+  margin-top: 30px;
+}
+
+#items-left {
+  grid-column: 1;
+}
+
+#items-right {
+  grid-column: 2;
+}
+
+.app-item {
+  width: 100%;
+  /*margin: 20px;*/
+  margin-top: 20px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.app-item-name {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.app-item-health {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.app-item-health .app-item-health-status {
+  font-weight: normal;
+  text-align: left;
+  padding-top: 0.6rem;
+}
+
+.health-ok {
+  height: 10px;
+  width: 10px;
+  background-color: #0ec9ae;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.health-not-ok {
+  height: 10px;
+  width: 10px;
+  background-color: #ec0000;
+  border-radius: 50%;
+  display: inline-block;
+}
